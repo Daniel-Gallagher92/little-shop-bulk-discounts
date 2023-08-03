@@ -6,14 +6,14 @@ FactoryBot.define do
 
   factory :invoice do
     status {[0,1,2].sample}
-    merchant
-    customer
+    # merchant
+    # customer
   end
 
   factory :merchant do
     name {Faker::Space.galaxy}
-    invoices
-    items
+    # invoices
+    # items
   end
 
   factory :item do
@@ -31,7 +31,7 @@ FactoryBot.define do
 
   factory :invoice_item do
     status {[0,1,2].sample}
-    merchant
-    invoice
+    # merchant
+    # invoice
   end
 end
