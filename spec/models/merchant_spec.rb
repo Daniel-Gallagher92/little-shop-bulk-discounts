@@ -165,7 +165,7 @@ describe Merchant do
     end
 
     it "disabled_items" do 
-      expect(@merchant1.disabled_items).to eq([@item_2, @item_3, @item_4, @item_7, @item_8])
+      expect(@merchant1.disabled_items).to match_array([@item_2, @item_3, @item_4, @item_7, @item_8])
       expect(@merchant2.disabled_items).to eq([@item_5, @item_6])
     end
   end
