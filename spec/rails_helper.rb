@@ -1,4 +1,4 @@
-def bulk_discount_index
+def bulk_discount_test_data
       @merchant_1 = create(:merchant)
       @merchant_2 = create(:merchant)
 

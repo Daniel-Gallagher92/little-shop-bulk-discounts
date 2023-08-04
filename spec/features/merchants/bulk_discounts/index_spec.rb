@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Merchant Bulk Discounts Index Page' do
   describe "US_1 (pt 2)" do 
     it 'displays all bulk discounts with percentage of discount and quantity threshold' do
-      bulk_discount_index
+      bulk_discount_test_data
 
       expect(page).to have_content("Bulk Discounts")
       expect(page).to have_link("#{@bulk_discount_1.id}")
@@ -22,7 +22,7 @@ RSpec.describe 'Merchant Bulk Discounts Index Page' do
 
   describe "US_2 Create Discount" do
     it "has a link to create a new discount" do
-      bulk_discount_index
+      bulk_discount_test_data
 
       visit merchant_bulk_discounts_path(@merchant_1)
 
@@ -53,7 +53,7 @@ RSpec.describe 'Merchant Bulk Discounts Index Page' do
     end
 
     it "can't create a discount without filling in all fields" do
-      bulk_discount_index
+      bulk_discount_test_data
 
       visit merchant_bulk_discounts_path(@merchant_1)
       click_link "Create New Discount"
@@ -73,7 +73,7 @@ RSpec.describe 'Merchant Bulk Discounts Index Page' do
 
   describe "US_3 Delete Discount" do 
     it "displays a link next to each discount to delete a discount" do
-      bulk_discount_index
+      bulk_discount_test_data
 
       visit merchant_bulk_discounts_path(@merchant_1)
 
