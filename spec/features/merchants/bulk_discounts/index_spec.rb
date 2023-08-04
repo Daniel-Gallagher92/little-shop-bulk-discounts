@@ -33,8 +33,41 @@ RSpec.describe 'Merchant Bulk Discounts Index Page' do
       click_link "Create New Discount"
 
       expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant_1))
+      
+      within "#new_discount_form" do
+        expect(page).to have_field("Percentage discount")
+        expect(page).to have_field("Quantity threshold")
+        expect(page).to have_button("Create New Discount")
+      end
 
-      save_and_open_page
+      fill_in "Percentage discount", with: 50
+      fill_in "Quantity threshold", with: 100
+      click_button "Create New Discount"
+
+      expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_1))
+      
+      within '#all_merchant_discounts' do
+        expect(page).to have_content("50.0% off!")
+        expect(page).to have_content("Quantity Threshold: 100")
+      end
+    end
+
+    it "can't create a discount without filling in all fields" do
+      bulk_discount_index
+
+      visit merchant_bulk_discounts_path(@merchant_1)
+      click_link "Create New Discount"
+      expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant_1))
+      
+      fill_in "Percentage discount", with: ''
+      fill_in "Quantity threshold", with: ''
+      click_button "Create New Discount"
+
+      expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant_1))
+      expect(page).to have_content("Please fill in all fields")
+      
+      expect(page).to have_field("Percentage discount")
+      expect(page).to have_field("Quantity threshold")
     end
   end
 end

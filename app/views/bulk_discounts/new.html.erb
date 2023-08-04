@@ -11,11 +11,15 @@
   <div class='row'>
     <p class='col-12'>Create New Discount</p>
   </div>
+
+  <section id='new_discount_form'>
+    <%= render partial: 'form', locals: {
+      path: merchant_bulk_discounts_path(@merchant),
+      method: :post,
+      button_text: 'Create New Discount',
+      quantity_threshold: '',
+      percentage_discount: ''
+    } %>
+  </section>
+
 </body>
-<%= render partial: 'form', locals: {
-  path: merchant_bulk_discounts_path(@merchant),
-  method: :post,
-  button_text: 'Create New Discount',
-  quantity_threshold: '',
-  percentage_discount: ''
-} %>
