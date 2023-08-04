@@ -70,4 +70,26 @@ RSpec.describe 'Merchant Bulk Discounts Index Page' do
       expect(page).to have_field("Quantity threshold")
     end
   end
+
+  describe "US_3 Delete Discount" do 
+    it "displays a link next to each discount to delete a discount" do
+      bulk_discount_index
+
+      visit merchant_bulk_discounts_path(@merchant_1)
+
+      within "#all_merchant_discounts" do
+        expect(page).to have_link("Delete Discount #{@bulk_discount_1.id}")
+      end
+
+      click_link "Delete Discount #{@bulk_discount_1.id}"
+
+      expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_1))
+
+      within "#all_merchant_discounts" do
+        expect(page).to_not have_content(@bulk_discount_1.id)
+        expect(page).to have_content(@bulk_discount_2.id)
+      end
+
+    end
+  end
 end
