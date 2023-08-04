@@ -1,3 +1,23 @@
+def bulk_discount_index
+      @merchant_1 = create(:merchant)
+      @merchant_2 = create(:merchant)
+
+      @bulk_discount_1 = @merchant_1.bulk_discounts.create!(percentage_discount: 5, quantity_threshold: 10)
+      @bulk_discount_2 = @merchant_1.bulk_discounts.create!(percentage_discount: 10, quantity_threshold: 15)
+      @bulk_discount_3 = @merchant_1.bulk_discounts.create!(percentage_discount: 20, quantity_threshold: 20)
+      @bulk_discount_4 = @merchant_1.bulk_discounts.create!(percentage_discount: 25, quantity_threshold: 30)
+      @bulk_discount_5 = @merchant_1.bulk_discounts.create!(percentage_discount: 30, quantity_threshold: 50)
+
+      @customer_1 = create(:customer)
+
+      @items_1 = create_list(:item, 10, unit_price: 50)
+      @items_2 = create_list(:item, 15, unit_price: 50)
+
+      visit merchant_bulk_discounts_path(@merchant_1)
+end
+
+
+
 require "simplecov"
 SimpleCov.start
 # This file is copied to spec/ when you run 'rails generate rspec:install'

@@ -6,22 +6,29 @@
         <%= link_to 'Merchant Invoices', merchant_invoices_path(@merchant), style: 'pull-right' %>
         <%= link_to 'Admin Invoices', admin_invoices_path, style: 'pull-right' %>
       </ul>
-  </div>
+  </nav>
 </div>
 
 <div class="row">
-  <p class='ml-auto col-sm-5'>Bulk Discounts</p>
+  <p class='ml-auto col-sm-5'><b>Bulk Discounts</b></p>
 </div>
 
 <body>
+
+  <div id="create_discount">
+    <%= link_to 'Create New Discount', new_merchant_bulk_discount_path(@merchant) %>
+  </div><br><br>
+
   <ul class='ml-auto col-sm-4'>
-    <% @merchant.bulk_discounts.each do |bulk_discount| %>
-      <div id='bulk_discount - <%= bulk_discount.id %>'>
-      <li><p>Discount: <%= link_to "#{bulk_discount.id}", merchant_bulk_discount_path(@merchant, bulk_discount) %></p>
-      <p>Percentage Discount: <%= bulk_discount.percentage_discount %>% off!</p>
-      <p>Quantity Threshold: <%= bulk_discount.quantity_threshold %> items </p><hr>
+    <div id='all_merchant_discounts'>
+      <% @merchant.bulk_discounts.each do |bulk_discount| %>
+        <div id='bulk_discount - <%= bulk_discount.id %>'>
+        <li><p>Discount: <%= link_to "#{bulk_discount.id}", merchant_bulk_discount_path(@merchant, bulk_discount) %></p>
+        <p>Percentage Discount: <%= bulk_discount.percentage_discount %>% off!</p>
+        <p>Quantity Threshold: <%= bulk_discount.quantity_threshold %> items </p><hr>
+        </div>
+      <% end %><hr>
       </div>
-    <% end %><hr>
   </ul>
 
 </body>
