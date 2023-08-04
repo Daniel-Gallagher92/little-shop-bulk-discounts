@@ -10,8 +10,12 @@
 <div class='container'>
   <div class='row'>
     <div class='col-md-6'>
-      <h3>Discount Details for Discount #<%= @bulk_discount.id %></h3><hr>
-      <p>Percentage Discount: <%= @bulk_discount.percentage_discount %>% off!</p>
-      <p>Quantity Threshold: <%= @bulk_discount.quantity_threshold %></p>
+      <div id="discount-show">
+        <h3>Discount Details for Discount #<%= @bulk_discount.id %></h3><hr>
+        <p>Percentage Discount: <%= @bulk_discount.percentage_discount %>% off!</p>
+        <p>Quantity Threshold: <%= @bulk_discount.quantity_threshold %></p>
+        <%= link_to "Edit Discount", "/merchant/#{@merchant.id}/bulk_discounts/#{@bulk_discount.id}/edit" %>
+      </div>
     </div>
   </div>
+</div>
