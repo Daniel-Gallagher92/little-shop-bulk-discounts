@@ -100,4 +100,36 @@ RSpec.describe "invoices show" do
     end
   end
 
+  describe 'US_6' do
+    it 'shows the total discounted revenue for this invoice' do
+      # merchant_2 = create(:merchant)
+
+      # bulk_discount_3 = merchant_2.bulk_discounts.create!(percentage_discount: 20, quantity_threshold: 20)
+      # bulk_discount_4 = merchant_2.bulk_discounts.create!(percentage_discount: 25, quantity_threshold: 30)
+
+      # customer_1 = create(:customer)
+
+      # item_1 = create(:item, unit_price: 50, merchant: merchant_2)
+      # item_2 = create(:item, unit_price: 150, merchant: merchant_2)
+      # item_3 = create(:item, unit_price: 250, merchant: merchant_2)
+
+      # invoice_1 = create(:invoice, customer: @customer_1)
+
+      # invoice_item_1 = create(:invoice_item, invoice: invoice_1, item: item_1, quantity: 10, unit_price: 50)
+      # invoice_item_2 = create(:invoice_item, invoice: invoice_1, item: item_2, quantity: 15, unit_price: 150)
+      # invoice_item_3 = create(:invoice_item, invoice: invoice_1, item: item_3, quantity: 20, unit_price: 250)
+
+      visit merchant_invoice_path(@merchant2, @invoice_1)
+
+      within "#total_revenue" do
+        expect(page).to have_content("#{@invoice_1.total_revenue}")
+      end
+
+      # within "#total_discounted_revenue" do 
+        # expect(page).to have_content("#{invoice_1.total_invoice_discount}")
+        # expect(page).to have_content("#{invoice_1.total_discounted_revenue}}")
+      # end
+    end
+  end
+
 end
