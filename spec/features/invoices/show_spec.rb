@@ -32,7 +32,7 @@ RSpec.describe "invoices show" do
 
     @invoice_8 = Invoice.create!(customer_id: @customer_6.id, status: 1)
 
-    @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 2)
+    @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 12, unit_price: 10, status: 2)
     @ii_2 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_1.id, quantity: 1, unit_price: 10, status: 2)
     @ii_3 = InvoiceItem.create!(invoice_id: @invoice_3.id, item_id: @item_2.id, quantity: 2, unit_price: 8, status: 2)
     @ii_4 = InvoiceItem.create!(invoice_id: @invoice_4.id, item_id: @item_3.id, quantity: 3, unit_price: 5, status: 1)
@@ -51,6 +51,9 @@ RSpec.describe "invoices show" do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 0, invoice_id: @invoice_6.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
+
+    @bulk_discount_3 = @merchant1.bulk_discounts.create!(percentage_discount: 20, quantity_threshold: 10)
+    @bulk_discount_4 = @merchant1.bulk_discounts.create!(percentage_discount: 25, quantity_threshold: 30)
   end
 
   it "shows the invoice information" do
@@ -97,6 +100,39 @@ RSpec.describe "invoices show" do
 
     within("#current-invoice-status") do
       expect(page).to_not have_content("in progress")
+    end
+  end
+
+  describe 'US_6' do
+    it 'shows the total discounted revenue for this invoice' do
+      # merchant_2 = create(:merchant)
+
+      # bulk_discount_3 = merchant_2.bulk_discounts.create!(percentage_discount: 20, quantity_threshold: 20)
+      # bulk_discount_4 = merchant_2.bulk_discounts.create!(percentage_discount: 25, quantity_threshold: 30)
+
+      # customer_1 = create(:customer)
+
+      # item_1 = create(:item, unit_price: 50, merchant: merchant_2)
+      # item_2 = create(:item, unit_price: 150, merchant: merchant_2)
+      # item_3 = create(:item, unit_price: 250, merchant: merchant_2)
+
+      # invoice_1 = create(:invoice, customer: @customer_1)
+
+      # invoice_item_1 = create(:invoice_item, invoice: invoice_1, item: item_1, quantity: 10, unit_price: 50)
+      # invoice_item_2 = create(:invoice_item, invoice: invoice_1, item: item_2, quantity: 15, unit_price: 150)
+      # invoice_item_3 = create(:invoice_item, invoice: invoice_1, item: item_3, quantity: 20, unit_price: 250)
+
+      visit merchant_invoice_path(@merchant1, @invoice_1)
+
+      within "#total_revenue" do
+        expect(page).to have_content("Total Revenue: #{@invoice_1.total_revenue}")
+      end
+
+      within "#total_revenue_with_discount" do 
+        expect(page).to have_content("Total Invoice Discount: #{@invoice_1.total_invoice_discount}")
+        expect(page).to have_content("Total Revenue with Discount: #{@invoice_1.total_revenue_with_discount}")
+      end
+
     end
   end
 
