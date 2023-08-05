@@ -14,9 +14,12 @@
   <div id='total_revenue'>
     <p>Total Revenue: <%= @invoice.total_revenue %></p>
   </div>
+
   <div id='total_revenue_with_discount'>
+    <p> Total Invoice Discount: <%= @invoice.total_invoice_discount %></p>
     <p>Total Revenue with Discount: <%= @invoice.total_revenue_with_discount %></p>
   </div>
+  
   <h4>Customer:</h4>
     <%= @customer.first_name %> <%= @customer.last_name %><br>
   <br>
