@@ -2,6 +2,7 @@ class BulkDiscountsController < ApplicationController
 
   def index
     @merchant = Merchant.find(params[:merchant_id])
+    @us_holidays = SwaggerService.new.next_three_holidays
   end
 
   def show
@@ -28,6 +29,7 @@ class BulkDiscountsController < ApplicationController
     bulk_discount = BulkDiscount.find_by(id: params[:id], merchant_id: params[:merchant_id])
     bulk_discount.destroy
     redirect_to merchant_bulk_discounts_path(merchant)
+    flash[:alert] = "Discount ##{bulk_discount.id} Successfully Deleted"
   end
 
   def edit

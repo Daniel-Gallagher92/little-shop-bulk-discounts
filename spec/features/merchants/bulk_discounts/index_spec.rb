@@ -89,7 +89,27 @@ RSpec.describe 'Merchant Bulk Discounts Index Page' do
         expect(page).to_not have_content(@bulk_discount_1.id)
         expect(page).to have_content(@bulk_discount_2.id)
       end
+      
+      expect(page).to have_content("Discount ##{@bulk_discount_1.id} Successfully Deleted")
+    end
+  end
 
+  describe "US_9 Next 3 Holidays API" do 
+    it "displays the next 3 holidays" do
+      bulk_discount_test_data
+
+      visit merchant_bulk_discounts_path(@merchant_1)
+      
+      expect(page).to have_content("Upcoming Holidays")
+
+      upcoming_holidays = SwaggerService.new.next_three_holidays
+
+      expect(page).to have_content("#{upcoming_holidays[0].name} - #{upcoming_holidays[0].date}")
+      expect(page).to have_content("#{upcoming_holidays[1].name} - #{upcoming_holidays[1].date}")
+      expect(page).to have_content("#{upcoming_holidays[2].name} - #{upcoming_holidays[2].date}")
+
+      expect(upcoming_holidays[0].date).to appear_before(upcoming_holidays[1].date)
+      expect(upcoming_holidays[1].date).to appear_before(upcoming_holidays[2].date)
     end
   end
 end
