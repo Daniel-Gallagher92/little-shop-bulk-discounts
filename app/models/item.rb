@@ -4,10 +4,10 @@ class Item < ApplicationRecord
                         :unit_price,
                         :merchant_id
 
-  has_many :invoice_items
-  has_many :invoices, through: :invoice_items
-  belongs_to :merchant
-  has_many :bulk_discounts, through: :merchant
+  has_many :invoice_items, dependent: :destroy
+  has_many :invoices, through: :invoice_items, dependent: :destroy
+  belongs_to :merchant, dependent: :destroy
+  has_many :bulk_discounts, through: :merchant, dependent: :destroy
 
   enum status: [:disabled, :enabled]
 
